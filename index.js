@@ -9,6 +9,8 @@ module.exports = function (options) {
   var pending = 0
   var queue = []
 
+  return Worker
+
   function flushQueue () {
     if (pending >= maxThread || !queue.length) return
     var job = queue.shift()
@@ -22,7 +24,7 @@ module.exports = function (options) {
     })(job.callback)
   }
 
-  return function (task) {
+  function Worker (task) {
     if (typeof task !== 'function') {
       throw new Error('Task "' + String(task) + '" is not function!')
     }

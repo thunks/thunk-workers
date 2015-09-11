@@ -18,10 +18,17 @@ var worker = require('../index')()
   })()
 })
 
-thunk(function *() {
-  console.log('Push last task')
-  yield worker(function () {
-    console.log('Last task')
-  })
+console.log('Push normal funciton')
+worker(function (callback) {
+  console.log('Normal funciton task')
+  if (true) throw new Error('someError')
+  callback()
+})(function (err) {
+  console.log('Normal funciton Error', err)
+})
 
+console.log('Push last task')
+worker(function (callback) {
+  console.log('Last task')
+  callback()
 })()

@@ -1,7 +1,15 @@
 # thunk-worker-queue
 
-## Demo
 
+
+A [thunk](https://github.com/thunks/thunks)-based task queue manager.
+
+
+Tasks can be pushed to in queue at the same time but running them one by one
+
+
+
+## Demo([examples](https://github.com/thunks/thunk-worker-queue/blob/master/examples))
 ```javascript
 'use strict'
 
@@ -27,13 +35,18 @@ thunk(function *() {
 })()
 ```
 
+
 ## API
 
 ### require('thunk-worker-queue')(options)
-Return a master `Worker`
+Create a `Worker` queue
 - `options` : {Object} includes:
-  - `maxThread` : {Number} max child thread allowed, default is `1`
+  - `maxThread` : *Optional* max child thread allowed, Type: `Number`, Default `1`.
 
-### Worker([thunkable])
-Push a task in the queue and run the task when any child thread is free.
-Return a thunkable
+
+### Worker([function (callback)])
+### Worker([function *])
+Push a task function in the queue and run the task when any child thread is free. `callback` should be called to go next task if argument is a normal function.
+
+
+Return a child thunk function
