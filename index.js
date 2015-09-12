@@ -18,17 +18,17 @@ module.exports = function (options) {
 
     thunk.call(job.ctx, job.task)(function (err, res) {
       pending--
-      flushQueue()
+      thunk.delay()(flushQueue)()
       if (err) throw err
-      return res
+      return arguments.length > 2 ? slice(arguments) : res
     })(job.callback)
   }
 
   function Worker (task) {
-    if (typeof task !== 'function') {
-      throw new Error('Task "' + String(task) + '" is not function!')
-    }
     return thunk.call(this, function (callback) {
+      if (typeof task !== 'function') {
+        throw new Error('Task "' + String(task) + '" is not function!')
+      }
       queue.push(new Job(this, task, callback))
       flushQueue()
     })
@@ -39,4 +39,14 @@ function Job (ctx, task, callback) {
   this.ctx = ctx
   this.task = task
   this.callback = callback
+}
+
+function slice (args, start) {
+  var len = args.length
+  start = start || 0
+  if (start >= len) return []
+
+  var ret = Array(len - start)
+  while (len-- > start) ret[len - start] = args[len]
+  return ret
 }

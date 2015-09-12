@@ -1,7 +1,11 @@
 {
   "name": "thunk-worker-queue",
   "version": "0.1.0",
-  "description": "",
+  "description": "A [thunk](https://github.com/thunks/thunks)-based task queue manager.\nTasks can be pushed to in queue at the same time but running them one by one",
+  "authors": [
+    "Yan Qing <admin@zensh.com>",
+    "Orange Mi <orangemiwj@gmail.com>"
+  ],
   "main": "index.js",
   "scripts": {
     "test": "standard && gulp test"
@@ -11,9 +15,9 @@
     "url": "git+https://github.com/thunks/thunk-worker-queue.git"
   },
   "keywords": [
-    "thunks"
+    "thunks",
+    "worker"
   ],
-  "author": "Orange Mi",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/thunks/thunk-worker-queue/issues"
