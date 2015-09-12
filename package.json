@@ -1,7 +1,7 @@
 {
-  "name": "thunk-worker-queue",
-  "version": "0.1.0",
-  "description": "A [thunk](https://github.com/thunks/thunks)-based task queue manager.\nTasks can be pushed to in queue at the same time but running them one by one",
+  "name": "thunk-workers",
+  "version": "1.0.0",
+  "description": "Deal with async tasks limited by workers in a workshop.",
   "authors": [
     "Yan Qing <admin@zensh.com>",
     "Orange Mi <orangemiwj@gmail.com>"
@@ -12,23 +12,27 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thunks/thunk-worker-queue.git"
+    "url": "git+https://github.com/thunks/thunk-workers.git"
   },
   "keywords": [
     "thunks",
-    "worker"
+    "worker",
+    "limit",
+    "thunk",
+    "task"
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/thunks/thunk-worker-queue/issues"
+    "url": "https://github.com/thunks/thunk-workers/issues"
   },
-  "homepage": "https://github.com/thunks/thunk-worker-queue#readme",
+  "homepage": "https://github.com/thunks/thunk-workers",
   "dependencies": {
     "thunks": "^3.5.0"
   },
   "devDependencies": {
-    "assert": "^1.3.0",
     "gulp": "^3.9.0",
-    "gulp-mocha": "^2.1.3"
+    "gulp-mocha": "^2.1.3",
+    "gulp-sequence": "^0.4.1",
+    "standard": "^5.2.2"
   }
 }

@@ -1,19 +1,14 @@
 'use strict'
 
-const gulp = require('gulp')
-const mocha = require('gulp-mocha')
-const gulpSequence = require('gulp-sequence')
+var gulp = require('gulp')
+var mocha = require('gulp-mocha')
+var gulpSequence = require('gulp-sequence')
 
 gulp.task('mocha', function () {
-  return gulp.src('test/*.js', {read: false})
-    .pipe(mocha({timeout: 3600 * 1000}))
-})
-
-gulp.task('exit', function (callback) {
-  callback()
-  process.exit(0)
+  return gulp.src('test/index.js', {read: false})
+    .pipe(mocha({timeout: 10000}))
 })
 
 gulp.task('default', ['test'])
 
-gulp.task('test', gulpSequence('mocha', 'exit'))
+gulp.task('test', gulpSequence('mocha'))
