@@ -1,6 +1,6 @@
 thunk-workers
 ====
-Deal with async tasks limited by workers in a workshop.
+Run async tasks limited by workers in a workshop.
 
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]

@@ -1,7 +1,7 @@
 {
   "name": "thunk-workers",
   "version": "1.0.0",
-  "description": "Deal with async tasks limited by workers in a workshop.",
+  "description": "Run async tasks limited by workers in a workshop.",
   "authors": [
     "Yan Qing <admin@zensh.com>",
     "Orange Mi <orangemiwj@gmail.com>"
