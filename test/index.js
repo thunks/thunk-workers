@@ -1,12 +1,11 @@
 'use strict'
-/* global describe, it, before */
+/* global describe, it */
 
 const thunk = require('thunks')()
 const ThunkWorkerQueue = require('../')
 const assert = require('assert')
 
 describe('thunk-worker-queue', function () {
-  before(function (callback) { callback() })
   it('Limit process running', function (callback) {
     var maxThread = 1
     var worker = ThunkWorkerQueue({maxThread: maxThread})
@@ -20,21 +19,15 @@ describe('thunk-worker-queue', function () {
     }
 
     for (let i = 0; i < 10; i++) {
-      ;(function (i) {
-          setTimeout(function () {
-            thunk(function *() {
-              yield worker(task)
-            })()
-          })
-        })(i)
+      thunk.delay(0)(function *() {
+        yield worker(task)
+      })()
     }
 
-    setTimeout(function () {
-      thunk(function *() {
-        yield worker(function *() {
-          callback()
-        })
-      })()
-    }, 10)
+    thunk.delay(100)(function *() {
+      yield worker(function *() {
+        callback()
+      })
+    })()
   })
 })

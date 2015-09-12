@@ -1,38 +1,26 @@
 # thunk-worker-queue
-
-
-
 A [thunk](https://github.com/thunks/thunks)-based task queue manager.
 
 
 Tasks can be pushed to in queue at the same time but running them one by one
 
 
-
 ## Demo([examples](https://github.com/thunks/thunk-worker-queue/blob/master/examples))
+
 ```javascript
 'use strict'
 
-const thunk = require('thunks')()
 const worker = require('thunk-worker-queue')()
 
 '1234'.split('').forEach(function (id) {
-  thunk(function *() {
-    console.log('Push task', id)
-    yield worker(function *() {
-      console.log('Task', id, 'running')
-      yield thunk.delay(1000)
-    })
-    console.log('Task', id, 'done')
-  })()
-})
-
-thunk(function *() {
-  console.log('Push last task')
-  yield worker(function () {
-    console.log('Last task')
+  worker(function (callback) {
+    console.log('Task ' + id + ' running')
+    callback(null, id)
+  })(function (error, result) {
+    if (error) console.error(error)
+    console.log('Task ' + result + ' done')
   })
-})()
+})
 ```
 
 
