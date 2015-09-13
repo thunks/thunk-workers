@@ -1,7 +1,7 @@
 {
   "name": "thunk-workers",
-  "version": "1.0.0",
-  "description": "Run async tasks limited by workers in a workshop.",
+  "version": "1.0.1",
+  "description": "Thunk-based task scheduler that executes synchrounous and/or asynchronous tasks under concurrency control.",
   "authors": [
     "Yan Qing <admin@zensh.com>",
     "Orange Mi <orangemiwj@gmail.com>"

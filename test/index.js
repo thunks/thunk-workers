@@ -51,6 +51,18 @@ describe('thunk-workers', function () {
     })(done)
   })
 
+  it('Support custom context', function (done) {
+    var workshop = thunkWorkers()
+    var ctx = {}
+
+    workshop.call(ctx, function () {
+      assert.strictEqual(this, ctx)
+    })(function (err) {
+      assert.strictEqual(err, null)
+      assert.strictEqual(this, ctx)
+    })(done)
+  })
+
   it('Run task limited by workers', function (done) {
     var workshop1 = thunkWorkers(2)
     var workshop2 = thunkWorkers(9)
@@ -79,7 +91,7 @@ describe('thunk-workers', function () {
     }
 
     for (var i = 0; i < 100; i++) jobs.push(workshop1(task1))
-    // should run well
+    // should run well because they are thunk!
     for (var j = 0; j < 100; j++) jobs.push(workshop2(task2)())
 
     thunk.all(jobs)(function (err) {

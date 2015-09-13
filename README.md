@@ -1,6 +1,6 @@
 thunk-workers
 ====
-Thunk-based task scheduler that executes synchrounous and/or asynchronous tasks under concurrency control
+Thunk-based task scheduler that executes synchrounous and/or asynchronous tasks under concurrency control.
 
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
