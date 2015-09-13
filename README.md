@@ -77,7 +77,7 @@ var thunkWorkers = require('thunk-workers')
 
 Create a workshop that limits the number of concurrent tasks being executed.
 
-- `count`: {Number} Maximum number of tasks a workshop is configured to own. It means maximum number of task threads being executed concurrently. Default to `1`.
+- `count`: {Number} Maximum number of task threads being executed concurrently. Default to `1`.
 
 ```js
 var workshop = thunkWorkers(5)
@@ -85,7 +85,7 @@ var workshop = thunkWorkers(5)
 
 ### workshop(task)
 
-Return a thunk function that executes a specific task. Tasks are queued by the time being added and wait to be executed once the number of concurrently executing tasks is within workshop's limitation.
+Return a thunk function that executes a specific task. Tasks are queued by the time the returned thunk function is executed. Once the number of concurrent tasks is within workshop's limitation, a task is polled from the queue and executed.
 
 - `task`: {Function} Support sync task or async task, task must be a function or a generator function. Async task should be generator function, or return a [thunkable](https://github.com/thunks/thunks) value, such as thunk function, promise, generator function, generator object.
 
