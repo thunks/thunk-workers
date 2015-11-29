@@ -9,21 +9,21 @@ var thunk = require('thunks')()
 var thunkWorkers = require('../index')
 
 describe('thunk-workers with Promise and Generator', function () {
-  it('support Promise', function (done) {
+  it('support Promise', function *() {
     var workshop = thunkWorkers()
 
-    workshop(function () {
+    var res = yield workshop(function () {
       return Promise.resolve(1)
-    })(function (err, res) {
-      assert.strictEqual(err, null)
-      assert.strictEqual(res, 1)
-      return workshop(function () {
+    })
+    assert.strictEqual(res, 1)
+
+    try {
+      yield workshop(function () {
         return Promise.reject('error')
       })
-    })(function (err, res) {
+    } catch (err) {
       assert.strictEqual(err, 'error')
-      assert.strictEqual(res, undefined)
-    })(done)
+    }
   })
 
   it('support Generator function', function (done) {

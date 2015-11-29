@@ -1,6 +1,6 @@
 {
   "name": "thunk-workers",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Thunk-based task scheduler that executes synchrounous and/or asynchronous tasks under concurrency control.",
   "authors": [
     "Yan Qing <admin@zensh.com>",
@@ -8,7 +8,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "standard && gulp test"
+    "test": "standard && mocha -t 10000 -r thunk-mocha test/index.js"
   },
   "repository": {
     "type": "git",
@@ -27,12 +27,15 @@
   },
   "homepage": "https://github.com/thunks/thunk-workers",
   "dependencies": {
-    "thunks": "^3.5.0"
+    "thunks": "^4.1.0"
   },
   "devDependencies": {
-    "gulp": "^3.9.0",
-    "gulp-mocha": "^2.1.3",
-    "gulp-sequence": "^0.4.1",
-    "standard": "^5.2.2"
-  }
+    "mocha": "^2.3.4",
+    "standard": "^5.4.1",
+    "thunk-mocha": "^1.0.1"
+  },
+  "files": [
+    "README.md",
+    "index.js"
+  ]
 }
