@@ -26,25 +26,23 @@ describe('thunk-workers with Promise and Generator', function () {
     }
   })
 
-  it('support Generator function', function (done) {
+  it('support Generator function', function *() {
     var workshop = thunkWorkers()
     var time = Date.now()
 
-    workshop(function *() {
+    var res = yield workshop(function *() {
       yield thunk.delay(100)
       return yield Promise.resolve(1)
-    })(function (err, res) {
-      assert.strictEqual(err, null)
-      assert.strictEqual(res, 1)
-      assert((time + 100) <= Date.now())
-      return workshop(function () {
-        return function *() {
-          return yield thunk(2)
-        }
-      })
-    })(function (err, res) {
-      assert.strictEqual(err, null)
-      assert.strictEqual(res, 2)
-    })(done)
+    })
+    assert.strictEqual(res, 1)
+    assert((time + 100) <= Date.now())
+
+    res = yield workshop(function () {
+      return function *() {
+        return yield thunk(2)
+      }
+    })
+
+    assert.strictEqual(res, 2)
   })
 })
