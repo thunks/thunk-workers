@@ -2,14 +2,14 @@
 // **Github:** https://github.com/thunks/thunk-workers
 //
 // **License:** MIT
-/* global describe, it */
 
 var assert = require('assert')
+var tman = require('tman')
 var thunk = require('thunks')()
 var thunkWorkers = require('../index')
 
-describe('thunk-workers with Promise and Generator', function () {
-  it('support Promise', function *() {
+tman.suite('thunk-workers with Promise and Generator', function () {
+  tman.it('support Promise', function *() {
     var workshop = thunkWorkers()
 
     var res = yield workshop(function () {
@@ -26,7 +26,7 @@ describe('thunk-workers with Promise and Generator', function () {
     }
   })
 
-  it('support Generator function', function *() {
+  tman.it('support Generator function', function *() {
     var workshop = thunkWorkers()
     var time = Date.now()
 

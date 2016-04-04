@@ -2,21 +2,21 @@
 // **Github:** https://github.com/thunks/thunk-workers
 //
 // **License:** MIT
-/* global describe, it */
 
 var assert = require('assert')
+var tman = require('tman')
 var thunk = require('thunks')()
 var thunkWorkers = require('../index')
 
-describe('thunk-workers', function () {
-  it('Throw error with non-function task', function (done) {
+tman.suite('thunk-workers', function () {
+  tman.it('Throw error with non-function task', function (done) {
     var workshop = thunkWorkers()
     workshop({})(function (err) {
       assert.strictEqual(err instanceof Error, true)
     })(done)
   })
 
-  it('Throw exception', function (done) {
+  tman.it('Throw exception', function (done) {
     var workshop = thunkWorkers()
     workshop(function () {
       throw new Error('some error')
@@ -26,7 +26,7 @@ describe('thunk-workers', function () {
     })(done)
   })
 
-  it('Run task async', function (done) {
+  tman.it('Run task async', function (done) {
     var async = false
     var workshop = thunkWorkers()
 
@@ -40,7 +40,7 @@ describe('thunk-workers', function () {
     async = true
   })
 
-  it('Support sync task', function (done) {
+  tman.it('Support sync task', function (done) {
     var workshop = thunkWorkers()
 
     workshop(function () {
@@ -51,7 +51,7 @@ describe('thunk-workers', function () {
     })(done)
   })
 
-  it('Support custom context', function (done) {
+  tman.it('Support custom context', function (done) {
     var workshop = thunkWorkers()
     var ctx = {}
 
@@ -63,7 +63,9 @@ describe('thunk-workers', function () {
     })(done)
   })
 
-  it('Run task limited by workers', function (done) {
+  tman.it('Run task limited by workers', function (done) {
+    this.timeout(5000)
+
     var workshop1 = thunkWorkers(2)
     var workshop2 = thunkWorkers(9)
     var jobs = []
