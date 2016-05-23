@@ -9,7 +9,7 @@ var thunk = require('thunks')()
 var thunkWorkers = require('../index')
 
 tman.suite('thunk-workers with Promise and Generator', function () {
-  tman.it('support Promise', function *() {
+  tman.it('support Promise', function * () {
     var workshop = thunkWorkers()
 
     var res = yield workshop(function () {
@@ -26,11 +26,11 @@ tman.suite('thunk-workers with Promise and Generator', function () {
     }
   })
 
-  tman.it('support Generator function', function *() {
+  tman.it('support Generator function', function * () {
     var workshop = thunkWorkers()
     var time = Date.now()
 
-    var res = yield workshop(function *() {
+    var res = yield workshop(function * () {
       yield thunk.delay(100)
       return yield Promise.resolve(1)
     })
@@ -38,7 +38,7 @@ tman.suite('thunk-workers with Promise and Generator', function () {
     assert((time + 100) <= Date.now())
 
     res = yield workshop(function () {
-      return function *() {
+      return function * () {
         return yield thunk(2)
       }
     })

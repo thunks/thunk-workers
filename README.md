@@ -4,6 +4,7 @@ Thunk-based task scheduler that executes synchrounous and/or asynchronous tasks 
 
 [![NPM version][npm-image]][npm-url]
 [![Build Status][travis-image]][travis-url]
+[![Downloads][downloads-image]][downloads-url]
 
 ## [thunks](https://github.com/thunks/thunks)
 
@@ -125,3 +126,6 @@ workshop(function *() {
 
 [travis-url]: https://travis-ci.org/thunks/thunk-workers
 [travis-image]: http://img.shields.io/travis/thunks/thunk-workers.svg
+
+[downloads-url]: https://npmjs.org/package/thunk-workers
+[downloads-image]: http://img.shields.io/npm/dm/thunk-workers.svg?style=flat-square
