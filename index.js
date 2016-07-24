@@ -20,7 +20,7 @@ module.exports = function thunkWorkers (count) {
 function Workers (count) {
   this.queue = []
   this.pending = 0
-  this.count = count >= 1 ? +count : 1
+  this.count = count >= 1 ? Math.floor(count) : 1
 }
 
 Workers.prototype.add = function (job) {
