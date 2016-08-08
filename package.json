@@ -1,6 +1,6 @@
 {
   "name": "thunk-workers",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Thunk-based task scheduler that executes synchrounous and/or asynchronous tasks under concurrency control.",
   "authors": [
     "Yan Qing <admin@zensh.com>",
@@ -27,11 +27,11 @@
   },
   "homepage": "https://github.com/thunks/thunk-workers",
   "dependencies": {
-    "thunks": "^4.3.0"
+    "thunks": "^4.4.3"
   },
   "devDependencies": {
     "standard": "^7.1.2",
-    "tman": "^1.0.2"
+    "tman": "^1.0.5"
   },
   "files": [
     "README.md",
