@@ -27,17 +27,17 @@ tman.suite('thunk-workers', function () {
   })
 
   tman.it('Run task async', function (done) {
-    var async = false
+    var asyncRun = false
     var workshop = thunkWorkers()
 
     workshop(function () {
-      assert.strictEqual(async, true)
-      async = false
+      assert.strictEqual(asyncRun, true)
+      asyncRun = false
     })(function (err) {
       assert.strictEqual(err, null)
-      assert.strictEqual(async, false)
+      assert.strictEqual(asyncRun, false)
     })(done)
-    async = true
+    asyncRun = true
   })
 
   tman.it('Support sync task', function (done) {

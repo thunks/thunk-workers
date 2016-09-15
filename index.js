@@ -3,7 +3,8 @@
 //
 // **License:** MIT
 
-var thunk = require('thunks')()
+var thunks = require('thunks')
+var thunk = thunks()
 
 module.exports = function thunkWorkers (count) {
   var workers = new Workers(count)
@@ -40,9 +41,7 @@ Workers.prototype.exec = function () {
   if (!job) return this
 
   this.pending++
-  thunk.delay()(function () {
-    return job.task.call(job.ctx)
-  })(function () {
+  thunk.delay.call(job.ctx)(function () { return job.task })(function () {
     ctx.pending--
     ctx.exec()
     job.callback.apply(null, arguments)
@@ -51,6 +50,11 @@ Workers.prototype.exec = function () {
 
 function Job (ctx, task, callback) {
   this.ctx = ctx
-  this.task = task
+  this.task = toThunkableFn(task)
   this.callback = callback
+}
+
+function toThunkableFn (fn) {
+  if (thunks.isThunkableFn(fn)) return fn
+  return function (done) { thunk(fn.call(this))(done) }
 }

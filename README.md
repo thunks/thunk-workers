@@ -88,15 +88,14 @@ var workshop = thunkWorkers(5)
 
 Return a thunk function that executes a specific task. Tasks are queued by the time the returned thunk function is executed. Once the number of concurrent tasks is within workshop's limitation, a task is polled from the queue and executed.
 
-- `task`: {Function} Support sync task or async task, task must be a function or a generator function. Async task should be generator function, or return a [thunkable](https://github.com/thunks/thunks) value, such as thunk function, promise, generator function, generator object.
+- `task`: {Function} Support sync task or async task, task must be a function or a generator function. Async task should be thunkable function, or return a [thunkable](https://github.com/thunks/thunks) value, such as thunk function, promise, generator function, generator object.
 
 ```js
-var job = workshop(function () {
-  return function (callback) {
-    setTimeout(function () {
-      callback(null, 'Async task')
-    }, 100)
-  }
+// Support thunk function
+var job = workshop(function (callback) {
+  setTimeout(function () {
+    callback(null, 'Async task')
+  }, 100)
 })
 
 job(function (err, res) {
@@ -109,13 +108,19 @@ workshop(function () {
 })(function (err, res) {
   console.log(err, res)
 })
-//Support Generator function
-workshop(function *() {
-  return yield function (callback) {
-    setTimeout(function () {
-      callback(null, 'Generator task')
-    }, 100)
-  }
+
+// Support Generator function
+workshop(function * () {
+  yield thunk.delay(100)
+  console.log('Generator task')
+})(function (err, res) {
+  console.log(err, res)
+})
+
+//Support async/await function
+workshop(async function () {
+  await Promise.resolve()
+  console.log('async/await task')
 })(function (err, res) {
   console.log(err, res)
 })

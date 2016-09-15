@@ -39,16 +39,22 @@ workshop(function () {
   console.log(error || 'Sync task finished!')
 })
 
-// async task
-workshop(function () {
-  return function (callback) {
-    setTimeout(function () {
-      console.log('Run async task')
-      callback()
-    }, 100)
-  }
+// thunk task
+workshop(function (callback) {
+  setTimeout(function () {
+    console.log('Run thunk task')
+    callback()
+  }, 100)
 })(function (error, res) {
-  console.log(error || 'Async task finished!')
+  console.log(error || 'Thunk task finished!')
+})
+
+// generator task
+workshop(function * () {
+  yield thunk.delay(100)
+  console.log('Run generator task')
+})(function (error, res) {
+  console.log(error || 'Generator task finished!')
 })
 
 job(function (err) {
