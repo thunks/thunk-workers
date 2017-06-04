@@ -1,5 +1,5 @@
-thunk-workers
-====
+# thunk-workers
+
 Thunk-based task scheduler that executes synchrounous and/or asynchronous tasks under concurrency control.
 
 [![NPM version][npm-image]][npm-url]
@@ -11,21 +11,21 @@ Thunk-based task scheduler that executes synchrounous and/or asynchronous tasks 
 ## Demo
 
 ```js
-var thunk = require('thunks')()
-var thunkWorkers = require('thunk-workers')
-var workshop = thunkWorkers(2)
+const thunk = require('thunks')()
+const thunkWorkers = require('thunk-workers')
+const workshop = thunkWorkers(2)
 
-for (var i = 1; i <= 10; i++) addWork(i)
+for (let i = 1; i <= 10; i++) addWork(i)
 
 function addWork (id) {
   workshop(function () {
     console.log('Task ' + id + ' start:')
 
-    var timer = setInterval(function () {
+    let timer = setInterval(function () {
       process.stdout.write(String(id))
     }, 50)
 
-    var time = 200 + Math.floor(1000 * Math.random())
+    let time = 200 + Math.floor(1000 * Math.random())
     if (id === 10) time = 10
 
     return thunk.delay(time)(function () {
@@ -71,7 +71,7 @@ function addWork (id) {
 ## API
 
 ```js
-var thunkWorkers = require('thunk-workers')
+const thunkWorkers = require('thunk-workers')
 ```
 
 ### thunkWorkers([count])
@@ -81,7 +81,7 @@ Create a workshop that limits the number of concurrent tasks being executed.
 - `count`: {Number} Maximum number of task threads being executed concurrently. Default to `1`.
 
 ```js
-var workshop = thunkWorkers(5)
+const workshop = thunkWorkers(5)
 ```
 
 ### workshop(task)
@@ -92,7 +92,7 @@ Return a thunk function that executes a specific task. Tasks are queued by the t
 
 ```js
 // Support thunk function
-var job = workshop(function (callback) {
+const job = workshop(function (callback) {
   setTimeout(function () {
     callback(null, 'Async task')
   }, 100)

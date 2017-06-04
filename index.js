@@ -3,15 +3,15 @@
 //
 // **License:** MIT
 
-var thunks = require('thunks')
-var thunk = thunks()
+const thunks = require('thunks')
+const thunk = thunks()
 
 module.exports = function thunkWorkers (count) {
-  var workers = new Workers(count)
+  const workers = new Workers(count)
   return function workshop (task) {
     return thunk.call(this, function (callback) {
       if (typeof task !== 'function') {
-        return callback(new Error('Task "' + String(task) + '" is not function!'))
+        return callback(new TypeError(`Task "${task}" is not function!`))
       }
       workers.add(new Job(this, task, callback)).exec()
     })
@@ -36,12 +36,12 @@ Workers.prototype.take = function () {
 Workers.prototype.exec = function () {
   if (this.pending >= this.count) return this
 
-  var ctx = this
-  var job = this.take()
+  const ctx = this
+  const job = this.take()
   if (!job) return this
 
   this.pending++
-  thunk.delay.call(job.ctx)(function () { return job.task })(function () {
+  thunk.delay.call(job.ctx)(() => job.task)(function () {
     ctx.pending--
     ctx.exec()
     job.callback.apply(null, arguments)

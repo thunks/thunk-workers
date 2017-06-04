@@ -3,21 +3,21 @@
 //
 // **License:** MIT
 
-var assert = require('assert')
-var tman = require('tman')
-var thunk = require('thunks')()
-var thunkWorkers = require('../index')
+const assert = require('assert')
+const tman = require('tman')
+const thunk = require('thunks')()
+const thunkWorkers = require('../index')
 
 tman.suite('thunk-workers', function () {
   tman.it('Throw error with non-function task', function (done) {
-    var workshop = thunkWorkers()
+    const workshop = thunkWorkers()
     workshop({})(function (err) {
       assert.strictEqual(err instanceof Error, true)
     })(done)
   })
 
   tman.it('Throw exception', function (done) {
-    var workshop = thunkWorkers()
+    const workshop = thunkWorkers()
     workshop(function () {
       throw new Error('some error')
     })(function (err) {
@@ -27,8 +27,8 @@ tman.suite('thunk-workers', function () {
   })
 
   tman.it('Run task async', function (done) {
-    var asyncRun = false
-    var workshop = thunkWorkers()
+    let asyncRun = false
+    const workshop = thunkWorkers()
 
     workshop(function () {
       assert.strictEqual(asyncRun, true)
@@ -41,7 +41,7 @@ tman.suite('thunk-workers', function () {
   })
 
   tman.it('Support sync task', function (done) {
-    var workshop = thunkWorkers()
+    const workshop = thunkWorkers()
 
     workshop(function () {
       return 1
@@ -52,8 +52,8 @@ tman.suite('thunk-workers', function () {
   })
 
   tman.it('Support custom context', function (done) {
-    var workshop = thunkWorkers()
-    var ctx = {}
+    const workshop = thunkWorkers()
+    const ctx = {}
 
     workshop.call(ctx, function () {
       assert.strictEqual(this, ctx)
@@ -66,13 +66,14 @@ tman.suite('thunk-workers', function () {
   tman.it('Run task limited by workers', function (done) {
     this.timeout(5000)
 
-    var workshop1 = thunkWorkers(2)
-    var workshop2 = thunkWorkers(9)
-    var jobs = []
-    var max1 = 0
-    var max2 = 0
-    var threads1 = 0
-    var threads2 = 0
+    const workshop1 = thunkWorkers(2)
+    const workshop2 = thunkWorkers(9)
+    const jobs = []
+
+    let max1 = 0
+    let max2 = 0
+    let threads1 = 0
+    let threads2 = 0
 
     function task1 () {
       threads1++
@@ -92,9 +93,9 @@ tman.suite('thunk-workers', function () {
       })
     }
 
-    for (var i = 0; i < 100; i++) jobs.push(workshop1(task1))
+    for (let i = 0; i < 100; i++) jobs.push(workshop1(task1))
     // should run well because they are thunk!
-    for (var j = 0; j < 100; j++) jobs.push(workshop2(task2)())
+    for (let j = 0; j < 100; j++) jobs.push(workshop2(task2)())
 
     thunk.all(jobs)(function (err) {
       assert.strictEqual(err, null)
@@ -105,7 +106,7 @@ tman.suite('thunk-workers', function () {
 })
 
 try { // 检测是否支持 generator，是则加载 generator 测试
-  var check = new Function('return function*(){}') // eslint-disable-line
+  let check = new Function('return function*(){}') // eslint-disable-line
   require('./generator.js')
 } catch (e) {
   console.log('Not support generator!')

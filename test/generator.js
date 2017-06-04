@@ -3,34 +3,34 @@
 //
 // **License:** MIT
 
-var assert = require('assert')
-var tman = require('tman')
-var thunk = require('thunks')()
-var thunkWorkers = require('../index')
+const assert = require('assert')
+const tman = require('tman')
+const thunk = require('thunks')()
+const thunkWorkers = require('../index')
 
 tman.suite('thunk-workers with Promise and Generator', function () {
   tman.it('support Promise', function * () {
-    var workshop = thunkWorkers()
+    const workshop = thunkWorkers()
 
-    var res = yield workshop(function () {
+    let res = yield workshop(function () {
       return Promise.resolve(1)
     })
     assert.strictEqual(res, 1)
 
     try {
       yield workshop(function () {
-        return Promise.reject('error')
+        return Promise.reject(new Error('error'))
       })
     } catch (err) {
-      assert.strictEqual(err, 'error')
+      assert.strictEqual(err.message, 'error')
     }
   })
 
   tman.it('support Generator function', function * () {
-    var workshop = thunkWorkers()
-    var time = Date.now()
+    const workshop = thunkWorkers()
+    let time = Date.now()
 
-    var res = yield workshop(function * () {
+    let res = yield workshop(function * () {
       yield thunk.delay(100)
       return yield Promise.resolve(1)
     })
